@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vue-learn</title>
+    <script src="./vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div class="static" :class="{active: isActive}"></div>
+      <div
+        class="array-type"
+        :class="[isActive && activeClass, errorClass]"
+      ></div>
+      <div
+        class="array-object-type"
+        :class="[{active: isActive}, errorClass]"
+      ></div>
+      <div :style="{color: activeColor, fontSize: fontSize + 'px'}">
+        绑定内联样式
+      </div>
+      <div :style="styleObject">我是内联样式</div>
+      <div :style="[styleObject, overridingStyles]">我是覆盖样式</div>
+    </div>
+  </body>
+  <script>
+    const data = {
+      isActive: true,
+      hasError: false,
+      activeClass: "active",
+      errorClass: "text-danger",
+      activeColor: "red",
+      fontSize: 30,
+      styleObject: {
+        color: "red",
+        fontSize: "13px",
+      },
+      overridingStyles: {
+        color: "black",
+        transform: "translateX(30px)",
+      },
+    };
+    const app = new Vue({
+      el: "#app",
+      data,
+      watch: {},
+      computed: {
+        classObject: function () {
+          return {
+            active: this.isActive && !this.error,
+            "text-danger": this.error && this.error.type === "fatal",
+          };
+        },
+      },
+      created: function () {
+        // 内部 this 指向 app 实例，不能使用箭头函数
+        console.log("this is message", this.message);
+      },
+    });
+  </script>
+</html>

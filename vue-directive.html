@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vue-learn</title>
+    <script src="./vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      {{message}}
+      <span v-once>这个将不变：{{message}}</span>
+      <a :href="href">跳转链接</a>
+      <a :[attributeName]="href" v-on:[eventName]="doSomething">动态链接</a>
+      <button @:click="message = 'baz'">Change it</button>
+      <p>Using mustaches: {{ rawHtml }}</p>
+      <p>Using v-html directive: <span v-html="rawHtml"></span></p>
+      <div v-bind:id="dynamicId">dynamicId</div>
+      <button v-on:click="doSomething" v-bind:disabled="isButtonDisabled">
+        Button
+      </button>
+      <div>
+        我是表达式{{dynamicId++}}---{{message.split('').reverse().join('')}}
+      </div>
+      <p v-if="seen"></p>
+    </div>
+  </body>
+  <script>
+    const data = {
+      message: "Hello Vue",
+      rawHtml: '<span style="color: red">This should be red.</span>',
+      dynamicId: 333,
+      isButtonDisabled: false,
+      seen: true,
+      href: "www.baidu.com",
+      attributeName: "href",
+      foo: "hah",
+    };
+    const app = new Vue({
+      el: "#app",
+      data,
+      methods: {
+        doSomething: function () {
+          console.log("我出发了 button 的点击事件");
+        },
+      },
+      created: function () {
+        // 内部 this 指向 app 实例，不能使用箭头函数
+        console.log("this is message", this.message);
+      },
+    });
+    console.log(app.message);
+    console.log(app.$data == data);
+    console.log(app.$el == document.getElementById("app"));
+
+    app.$watch("message", function (newValue, oldValue) {
+      console.log(newValue, oldValue);
+    });
+  </script>
+</html>

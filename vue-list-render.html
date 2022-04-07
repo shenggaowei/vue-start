@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <li id="example-2" v-for="(item, index) in items" key="item.message">
+        {{item.message}}
+      </li>
+      <hr />
+      <li id="example-2" v-for="(item,index) of items" key="item.message">
+        {{item.message}}
+      </li>
+      <hr />
+      <li id="example-3" v-for="value in object">{{value}}</li>
+      <hr />
+      <li id="example-4" v-for="(value, name, index) in object">
+        {{index}}:{{name}}: {{value}}
+      </li>
+      <hr />
+      <li v-for="n in evenNumbers">{{n}}</li>
+      <hr />
+      <ul v-for="set in sets">
+        <li v-for="n in even(set)">{{n}}</li>
+      </ul>
+      <hr />
+      <span v-for="n in 10">{{n}}</span>
+      <ul>
+        <template v-for="item in items">
+          <li>{{item.message}}</li>
+          <li class="divider" role="presentation"></li>
+        </template>
+      </ul>
+    </div>
+  </body>
+  <script>
+    const data = {
+      items: [{ message: "Foo" }, { message: "Bar" }],
+      object: {
+        title: "How to do lists in Vue",
+        author: "Jane Doe",
+        publishedAt: "2016-04-10",
+      },
+      numbers: [1, 2, 3, 4, 5],
+      sets: [
+        [1, 2, 3, 4, 5],
+        [6, 7, 8, 9, 10],
+      ],
+    };
+    const vm = new Vue({
+      el: "#app",
+      data,
+      watch: {},
+      computed: {
+        evenNumbers: function () {
+          return this.numbers.filter(function (number) {
+            return number % 2 === 0;
+          });
+        },
+      },
+      methods: {
+        even: function (numbers) {
+          return numbers.filter(function (number) {
+            return number % 2 === 0;
+          });
+        },
+      },
+      created: function () {},
+    });
+  </script>
+</html>

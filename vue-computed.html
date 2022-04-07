@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vue-learn</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      {{message}}
+      <p>{{reversedMessage}}</p>
+      <div id="demo">{{ fullName }}</div>
+      <div>{{firstName}} {{lastName}}</div>
+    </div>
+  </body>
+  <script>
+    const data = {
+      message: "Hello Vue",
+      firstName: "Foo",
+      lastName: "Bar",
+    };
+    const app = new Vue({
+      el: "#app",
+      data,
+      watch: {
+        firstName: function (val) {
+          this.fullName = val + " " + this.lastName;
+        },
+        lastName: function (val) {
+          this.fullName = this.firstName + " " + val;
+        },
+      },
+      computed: {
+        // 计算属性是基于它们的响应式依赖进行缓存的 data中的数据都是响应式的
+        reversedMessage: function () {
+          // `this` 指向 app 实例
+          return this.message.split("").reverse().join("");
+        },
+        fullName: {
+          get: function () {
+            return this.firstName + " " + this.lastName;
+          },
+          set: function (newValue) {
+            const names = newValue.split(" ");
+            this.firstName = names[0];
+            this.lastName = names[names.length - 1];
+          },
+        },
+      },
+      created: function () {
+        // 内部 this 指向 app 实例，不能使用箭头函数
+        console.log("this is message", this.message);
+      },
+    });
+    console.log(app.reversedMessage);
+    app.message = "Goodbye";
+    console.log(app.reversedMessage);
+    setTimeout(() => {
+      app.fullName = "John Doe";
+    }, 3000);
+  </script>
+</html>

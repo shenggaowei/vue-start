@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <h1 v-if="awesome">Vue is awesome!</h1>
+      <h1 v-else>Oh no!</h1>
+      <template v-if="ok">
+        <h1>Title</h1>
+        <p>Paragraph 1</p>
+        <p>Paragraph 2</p>
+      </template>
+      <div v-if="Math.random() > 0.5">Now you see me</div>
+      <div v-else>Now you don't</div>
+      <div v-show="ok">v-show</div>
+    </div>
+  </body>
+  <script>
+    // v-show 不支持 <template> 元素，也不支持 v-else
+    const data = {
+      awesome: false,
+      ok: true,
+    };
+    const vm = new Vue({
+      el: "#app",
+      data,
+      watch: {},
+      computed: {},
+      methods: {},
+      created: function () {},
+    });
+  </script>
+</html>
