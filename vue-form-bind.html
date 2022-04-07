@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div id="example1">
+        <input v-model="message" placeholder="edit me" />
+        <p>Message is: {{message}}</p>
+      </div>
+      <hr />
+      <div id="example2">
+        <span>Multiline message is</span>
+        <p style="white-space: pre-line">{{message_mul}}</p>
+        <br />
+        <textarea
+          v-model="message_mul"
+          placeholder="add multiple lines"
+        ></textarea>
+      </div>
+      <hr />
+      <div id="example3">
+        <input type="checkbox" id="checkbox" v-model="checked" />
+        <label for="checkbox">{{ checked }}</label>
+      </div>
+      <hr />
+      <div id="example4">
+        <input type="checkbox" id="jack" value="Jack" v-model="checkedNames" />
+        <label for="jack">Jack</label>
+        <input type="checkbox" id="john" value="John" v-model="checkedNames" />
+        <label for="john">John</label>
+        <input type="checkbox" id="mike" value="Mike" v-model="checkedNames" />
+        <label for="mike">Mike</label>
+        <br />
+        <span>Checked names: {{ checkedNames }}</span>
+      </div>
+      <hr />
+      <div id="example5">
+        <input type="radio" id="one" value="One" v-model="picked" />
+        <label for="one">One</label>
+        <br />
+        <input type="radio" id="two" value="Two" v-model="picked" />
+        <label for="two">Two</label>
+        <br />
+        <span>Picked: {{ picked }}</span>
+      </div>
+      <hr />
+      <div id="example6">
+        <select v-model="selected">
+          <option disabled value="">请选择</option>
+          <option>A</option>
+          <option>B</option>
+          <option>C</option>
+        </select>
+        <span>Selected: {{selected}}</span>
+      </div>
+      <hr />
+      <div id="example7">
+        <select multiple style="width: 50px" v-model="selected_mul">
+          <option disabled value="">请选择</option>
+          <option>A</option>
+          <option>B</option>
+          <option>C</option>
+        </select>
+        <span>Selected: {{selected_mul}}</span>
+      </div>
+      <div id="example8">
+        <select multiple style="width: 50px" v-model="selected_mul2">
+          <option v-for="option in options" :value="option.value">
+            {{option.text}}
+          </option>
+        </select>
+        <span>Selected: {{selected_mul2}}</span>
+      </div>
+      <div id="example9">
+        <input type="radio" v-model="self_picked" value="a" />
+        <p>{{self_picked}}</p>
+        <input
+          type="checkbox"
+          v-model="self_toggle"
+          true-value="yes"
+          false-value="no"
+        />
+        <p>{{self_toggle}}</p>
+      </div>
+      <div id="example10">
+        <input v-model.lazy="lazy_message" />
+        <p>{{lazy_message}}</p>
+      </div>
+    </div>
+    <script>
+      // lazy 修饰符是在 onchange 事件后进行赋值，而不是在 onInput 事件之后
+      const data = {
+        message: "",
+        lazy_message: "",
+        message_mul: "",
+        checked: false,
+        checkedNames: [],
+        self_picked: "",
+        self_toggle: false,
+        picked: "",
+        selected: "",
+        selected_mul: [],
+        selected_mul2: [],
+        options: [
+          {
+            text: "One",
+            value: "A",
+          },
+          {
+            text: "Two",
+            value: "B",
+          },
+          {
+            text: "Three",
+            value: "C",
+          },
+        ],
+      };
+      const vm = new Vue({
+        el: "#app",
+        data,
+        watch: {},
+        computed: {},
+        methods: {},
+        mounted: function () {},
+      });
+    </script>
+  </body>
+</html>
