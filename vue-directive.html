@@ -13,7 +13,7 @@
       <span v-once>这个将不变：{{message}}</span>
       <a :href="href">跳转链接</a>
       <a :[attributeName]="href" v-on:[eventName]="doSomething">动态链接</a>
-      <button @:click="message = 'baz'">Change it</button>
+      <button @click="message = 'baz'">Change it</button>
       <p>Using mustaches: {{ rawHtml }}</p>
       <p>Using v-html directive: <span v-html="rawHtml"></span></p>
       <div v-bind:id="dynamicId">dynamicId</div>
