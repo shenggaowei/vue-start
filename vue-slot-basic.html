@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dynamic Components Example</title>
+    <script src="./vue.js"></script>
+  </head>
+  <body>
+    <div id="app" class="demo">
+      <navigation-link :urls="url"></navigation-link>
+    </div>
+    <script>
+      /**
+       * 规则：父级模板里的所有内容都是在父级作用域中编译的；子模板里的所有内容都是在子作用域中编译的。
+       * 无法访问 urls
+       **/
+      Vue.component("navigation-link", {
+        props: ["urls"],
+        template: `<div><slot>我是兜底文案</slot></div>`,
+      });
+      const data = {
+        url: "www.baidu.com",
+      };
+      new Vue({
+        el: "#app",
+        data,
+        computed: {},
+      });
+    </script>
+  </body>
+</html>

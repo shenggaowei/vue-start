@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dynamic Components Example</title>
+    <script src="./vue.js"></script>
+  </head>
+  <body>
+    <div id="app" class="demo">
+      <todo-list>
+        <template #default="slotProps">
+          <div>{{slotProps.item.value}}</div>
+        </template>
+      </todo-list>
+    </div>
+    <script>
+      /**
+       * <template v-slot:default="slotProps"></template>
+       * <template #default="slotProps"></template>
+       **/
+      Vue.component("todo-list", {
+        data: function () {
+          return {
+            data: [
+              {
+                label: "list1",
+                value: 1,
+              },
+              {
+                label: "list2",
+                value: 2,
+              },
+            ],
+          };
+        },
+        template: `<ul>
+        <li v-for="item in data" :key="item.value">
+          <slot :item="item">兜底数据</slot>
+        </li>
+      </ul>`,
+      });
+      const data = {
+        url: "www.baidu.com",
+      };
+      new Vue({
+        el: "#app",
+        data,
+        computed: {},
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dynamic Components Example</title>
+    <script src="./vue.js"></script>
+  </head>
+  <body>
+    <div id="app" class="demo">
+      <navigation-link :urls="url">
+        <template v-slot:default="slotProps">
+          <div>{{slotProps.user.name}} slot</div>
+        </template>
+      </navigation-link>
+    </div>
+    <script>
+      /**
+       * slot 组件向父组件传递属性值
+       * 1. slot 元素通过 v-bind: 绑定需要传给父组件的属性
+       * 2. 父组件将插槽元素通过 template 模板进行包裹，通过 v-slot:[slotName] 获取 slot 元素传给父组件的属性
+       *
+       * 注意：只要出现多个插槽，就要始终为所有的插槽使用完整的基于 <template> 的语法
+       *
+       * - 解构插槽
+       **/
+      Vue.component("navigation-link", {
+        data: function () {
+          return {
+            user: {
+              name: "升高",
+              age: 18,
+            },
+          };
+        },
+        props: ["urls"],
+        template: `<div>
+           <span>{{user.age}}</span>
+            <slot v-bind:user="user">{{user.name}} 兜底</slot></div>`,
+      });
+      const data = {
+        url: "www.baidu.com",
+      };
+      new Vue({
+        el: "#app",
+        data,
+        computed: {},
+      });
+    </script>
+  </body>
+</html>

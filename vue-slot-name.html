@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dynamic Components Example</title>
+    <script src="./vue.js"></script>
+  </head>
+  <body>
+    <div id="app" class="demo">
+      <navigation-link :urls="url">
+        <template v-slot:header>slot-header</template>
+        <template v-slot:body>slot-body</template>
+        <template v-slot:footer>slot-footer</template>
+      </navigation-link>
+    </div>
+    <script>
+      /**
+       * 规则：父级模板里的所有内容都是在父级作用域中编译的；子模板里的所有内容都是在子作用域中编译的。
+       * 无法访问 urls
+       * v-slot 具名插槽必须放在 template 元素上使用
+       **/
+      Vue.component("navigation-link", {
+        props: ["urls"],
+        template: `<div><slot name="header">我是头部</slot><slot name="body">我是主体</slot><slot name="footer">我是底部</slot></div>`,
+      });
+      const data = {
+        url: "www.baidu.com",
+      };
+      new Vue({
+        el: "#app",
+        data,
+        computed: {},
+      });
+    </script>
+  </body>
+</html>
