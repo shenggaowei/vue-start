@@ -8,7 +8,7 @@
     <div id="app" class="demo">
       <todo-list>
         <template #default="slotProps">
-          <div>{{slotProps.item.value}}</div>
+          <div>{{slotProps.item.label}}</div>
         </template>
       </todo-list>
     </div>
@@ -23,7 +23,7 @@
             data: [
               {
                 label: "list1",
-                value: 1,
+                value: "",
               },
               {
                 label: "list2",

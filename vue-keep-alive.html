@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dynamic Components Example</title>
+    <script src="./vue.js"></script>
+  </head>
+  <body>
+    <div id="app" class="demo">
+      <keep-alive>
+        <component :is="currentTabComponent"></component>
+      </keep-alive>
+    </div>
+    <script>
+      /**
+       * keep-alive 切换组件后，会将原来组件的状态保留。
+       **/
+      const data = {
+        url: "www.baidu.com",
+      };
+      new Vue({
+        el: "#app",
+        data,
+        computed: {},
+      });
+    </script>
+  </body>
+</html>
