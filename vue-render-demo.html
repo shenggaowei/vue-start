@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dynamic Components Example</title>
+    <script src="./vue.js"></script>
+  </head>
+  <body>
+    <div id="app" class="demo">
+      <anchored-heading :level="1">
+        <div>
+          我是h1
+          <div>
+            我是h2
+            <div>我是h3</div>
+          </div>
+        </div>
+      </anchored-heading>
+    </div>
+    <script>
+      const getNodeText = (nodes) => {
+        return nodes
+          .map((node) => {
+            return node.children ? getNodeText(node.children) : node.text;
+          })
+          .join("");
+      };
+      Vue.component("anchored-heading", {
+        props: {
+          level: {
+            type: Number,
+            required: true,
+          },
+        },
+        render: function (createElement) {
+          const headingId = getNodeText(this.$slots.default)
+            .replace(/\W+/g, "-")
+            .replace(/(^-|-$)/g, "");
+          const tag = "h" + this.level;
+          const children = [
+            createElement(
+              "a",
+              {
+                attrs: {
+                  name: headingId,
+                  href: "#" + headingId,
+                },
+              },
+              this.$slots.default
+            ),
+          ];
+          return createElement(tag, children);
+        },
+      });
+      const data = {};
+      new Vue({
+        el: "#app",
+        data,
+        computed: {},
+      });
+    </script>
+  </body>
+</html>

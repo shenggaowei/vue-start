@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dynamic Components Example</title>
+    <script src="./vue.js"></script>
+  </head>
+  <body>
+    <div id="app" class="demo">
+      <input v-model="value" />
+      <div>{{value | capitalize | parse}}</div>
+    </div>
+    <script>
+      const data = {
+        value: "",
+      };
+      new Vue({
+        el: "#app",
+        data,
+        computed: {},
+        filters: {
+          capitalize: function (value) {
+            if (!value) return "";
+            value = value.toString();
+            return value.charAt(0).toUpperCase() + value.slice(1);
+          },
+          parse: function (value) {
+            return value + "升高";
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

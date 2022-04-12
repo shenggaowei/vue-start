@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dynamic Components Example</title>
+    <script src="./vue.js"></script>
+  </head>
+  <body>
+    <div id="app" class="demo">
+      <self-input v-model="value"></self-input>
+    </div>
+    <script>
+      Vue.component("self-input", {
+        props: ["value"],
+        render: function (createElement) {
+          const self = this;
+          return createElement("input", {
+            domProps: {
+              value: self.value,
+            },
+            on: {
+              input: function (e) {
+                self.$emit("input", e.target.value);
+              },
+            },
+          });
+        },
+      });
+      const data = { value: "" };
+      new Vue({
+        el: "#app",
+        data,
+        watch: {
+          value: function (newValue) {
+            console.log(newValue);
+          },
+        },
+        computed: {},
+      });
+    </script>
+  </body>
+</html>

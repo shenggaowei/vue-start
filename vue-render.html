@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dynamic Components Example</title>
+    <script src="./vue.js"></script>
+  </head>
+  <body>
+    <div id="app" class="demo">
+      <anchored-heading :level="1"><div>哈哈</div></anchored-heading>
+      <anchored-heading :level="2"><div>哈哈</div></anchored-heading>
+      <anchored-heading :level="3"
+        ><div><p>嘻嘻</p></div></anchored-heading
+      >
+    </div>
+    <script>
+      /**
+       * createElement('容器节点', 节点的属性?，节点的子组件)
+       **/
+      const data = {};
+      Vue.component("anchored-heading", {
+        props: {
+          level: {
+            type: Number,
+            required: true,
+          },
+        },
+        render: function (createElement) {
+          console.log(this.$slots.default);
+          return createElement("h" + this.level, this.$slots.default);
+        },
+      });
+      new Vue({
+        el: "#app",
+        data,
+        computed: {},
+      });
+    </script>
+  </body>
+</html>
