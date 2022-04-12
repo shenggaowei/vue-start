@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dynamic Components Example</title>
+    <script src="./vue.js"></script>
+  </head>
+  <body>
+    <div id="app" class="demo">
+      <div v-for="(item, index) in arr" :key="index">{{item}}</div>
+    </div>
+    <script>
+      /**
+       * 修改数组 通过 splice 或者 vm.$set
+       * 声明响应式的 property，需要在 data 里面先定义才能进行修改
+       **/
+      const data = {
+        arr: [1, 2, 3, 4],
+      };
+      const vm = new Vue({
+        el: "#app",
+        data,
+        computed: {},
+      });
+      //无效 vm.arr[1] = "hah";
+      vm.arr.splice(1, 1, 6);
+      vm.$set(vm.arr, 3, 8);
+    </script>
+  </body>
+</html>
