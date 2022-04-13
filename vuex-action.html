@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dynamic Components Example</title>
+    <script src="./vue.js"></script>
+    <script src="./vuex.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      const INCREMENT = "increment";
+      const DECREMENT = "decrement";
+
+      Vue.use(Vuex);
+      const store = new Vuex.Store({
+        state: {
+          count: 0,
+        },
+        mutations: {
+          [INCREMENT](state) {
+            state.count++;
+          },
+          [DECREMENT](state) {
+            state.count--;
+          },
+        },
+        actions: {
+          asyncIncrement(context) {
+            const { commit } = context;
+            setTimeout(() => {
+              commit(INCREMENT);
+            }, 1000);
+          },
+          asyncDecrement(context) {
+            const { commit } = context;
+            setTimeout(() => {
+              commit(DECREMENT);
+            }, 1000);
+          },
+          async asyncDecrementPromise(context) {
+            const { commit, state } = context;
+            return new Promise((resolve, reject) => {
+              setTimeout(() => {
+                commit(DECREMENT);
+                resolve(state.count);
+              }, 1000);
+            });
+          },
+          async asyncIncrementPromise(context) {
+            const { commit, state } = context;
+            return new Promise((resolve, reject) => {
+              setTimeout(() => {
+                commit(INCREMENT);
+                resolve(state.count);
+              }, 1000);
+            }).then(async (ret) => {
+              const data = await store.dispatch("asyncDecrementPromise");
+              console.log("我是另外一个异步 action ", data);
+            });
+          },
+        },
+      });
+
+      const Counter = {
+        template: `<div>
+                <button :style="{cursor: 'pointer',marginRight: '10px'}" @click="asyncIncrement">增加</button>
+                <button :style="{cursor: 'pointer',marginRight: '10px'}" @click="asyncDecrement">减少</button>
+                {{count}}
+            </div>`,
+        computed: {
+          count() {
+            return this.$store.state.count + "哈哈";
+          },
+        },
+        methods: {
+          ...Vuex.mapActions({
+            asyncIncrement: "asyncIncrement",
+            asyncDecrement: "asyncDecrement",
+          }),
+        },
+      };
+
+      const vm = new Vue({
+        el: "#app",
+        data: {},
+        computed: {},
+        components: {
+          Counter,
+        },
+        store,
+        template: `
+          <div class="app">
+        <counter></counter>
+      </div>
+          `,
+      });
+      vm.$store.dispatch("asyncIncrementPromise").then((data) => {});
+    </script>
+  </body>
+</html>
