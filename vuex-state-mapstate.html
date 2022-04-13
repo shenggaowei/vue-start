@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dynamic Components Example</title>
+    <script src="./vue.js"></script>
+    <script src="./vuex.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      Vue.use(Vuex);
+      const store = new Vuex.Store({
+        state: {
+          count: 1,
+          age: 18,
+        },
+        mutations: {
+          increment(state) {
+            state.count++;
+          },
+        },
+      });
+
+      const Counter = {
+        data: function () {
+          return {
+            localCount: 10,
+          };
+        },
+        template: `<div>{{ count }}++ {{countPlusLocalState}}</div>`,
+        computed: Vuex.mapState({
+          count: (state) => state.count,
+          countAlias: "count",
+          countPlusLocalState(state) {
+            return state.count + this.localCount;
+          },
+        }),
+      };
+
+      const Counter2 = {
+        data: function () {
+          return {
+            localCount: 10,
+          };
+        },
+        template: `<div>{{ count }}++ {{countPlusLocalState}}</div>`,
+        computed: Vuex.mapState(["count"]),
+      };
+
+      const Counter3 = {
+        data: function () {
+          return {
+            localCount: 10,
+          };
+        },
+        template: `<div>{{ count }}++ {{countPlusLocalState}}</div>`,
+        computed: {
+          countPlusLocalState(state) {
+            return state.count + this.localCount;
+          },
+          ...Vuex.mapState(["count"]),
+        },
+      };
+
+      new Vue({
+        el: "#app",
+        data: {},
+        computed: {},
+        components: {
+          Counter,
+        },
+        store,
+        template: `
+        <div class="app">
+      <counter></counter>
+    </div>
+        `,
+      });
+    </script>
+  </body>
+</html>

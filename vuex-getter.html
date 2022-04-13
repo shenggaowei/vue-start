@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dynamic Components Example</title>
+    <script src="./vue.js"></script>
+    <script src="./vuex.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      Vue.use(Vuex);
+      const store = new Vuex.Store({
+        state: {
+          count: 18,
+          todos: [
+            { id: 1, text: "...", done: true },
+            { id: 3, text: "...", done: true },
+            { id: 2, text: "...", done: false },
+          ],
+        },
+        getters: {
+          doneTodos: (state) => {
+            return state.todos.filter((todo) => todo.done);
+          },
+          doneTodosCount: (state, getter) => {
+            return getter.doneTodos.length;
+          },
+          getTodoById: (state) => (id) => {
+            return state.todos.find((ele) => ele.id === id);
+          },
+        },
+      });
+
+      const Counter = {
+        template: `<div @click="getTodoById">{{ count }}<div>{{ doneTodosCount }}</div></div>`,
+        computed: {
+          count() {
+            return this.$store.state.count + "哈哈";
+          },
+          doneTodosCount() {
+            return this.$store.getters.doneTodosCount;
+          },
+        },
+        methods: {
+          getTodoById: function () {
+            let ret = this.$store.getters.getTodoById(2);
+            console.log(ret);
+          },
+        },
+      };
+
+      const Counter2 = {
+        template: `<div @click="getTodoById">{{ count }}<div>{{ doneTodosCount }}</div></div>`,
+        computed: {
+          ...Vuex.mapGetters(["doneTodosCount", "getTodoById"]),
+        },
+        methods: {
+          getTodoById: function () {
+            let ret = this.$store.getters.getTodoById(2);
+            console.log(ret);
+          },
+        },
+      };
+      new Vue({
+        el: "#app",
+        data: {},
+        computed: {},
+        components: {
+          Counter,
+        },
+        store,
+        template: `
+          <div class="app">
+        <counter></counter>
+      </div>
+          `,
+      });
+    </script>
+  </body>
+</html>

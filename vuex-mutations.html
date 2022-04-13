@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dynamic Components Example</title>
+    <script src="./vue.js"></script>
+    <script src="./vuex.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      const INCREMENT = "increment";
+
+      Vue.use(Vuex);
+      const store = new Vuex.Store({
+        state: {
+          count: 0,
+        },
+        mutations: {
+          [INCREMENT](state, payload) {
+            console.log(payload);
+            state.count = state.count + payload;
+          },
+        },
+      });
+
+      const Counter = {
+        template: `<div @click="add(3)" >{{ count }}</div>`,
+        computed: {
+          count() {
+            return this.$store.state.count + "哈哈";
+          },
+        },
+        methods: {
+          ...Vuex.mapMutations({
+            add: "increment",
+          }),
+        },
+      };
+
+      new Vue({
+        el: "#app",
+        data: {},
+        computed: {},
+        components: {
+          Counter,
+        },
+        store,
+        template: `
+        <div class="app">
+      <counter></counter>
+    </div>
+        `,
+      });
+    </script>
+  </body>
+</html>
