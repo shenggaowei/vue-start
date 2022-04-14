@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./vue.js"></script>
+    <style>
+      .fade-enter-active,
+      .fade-leave-active {
+        transition: opacity 0.5s;
+      }
+      .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <button @click="show = !show">点击</button>
+      <transition name="fade">
+        <p v-show="show">显示</p>
+      </transition>
+    </div>
+    <script>
+      const data = { show: false };
+      const vm = new Vue({
+        el: "#app",
+        data,
+        watch: {},
+        computed: {},
+        methods: {},
+        mounted: function () {},
+      });
+    </script>
+  </body>
+</html>
