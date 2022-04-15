@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./vue.js"></script>
+    <script src="./lodash.js"></script>
+    <style>
+      .container {
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 360px;
+        height: 360px;
+      }
+
+      .button-container {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .flip-list-move {
+        transition: transform 3s;
+      }
+
+      .container div {
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <transition-group name="flip-list" tag="div" class="container">
+        <div v-for="(item, index) in items" :key="item.key">{{item.value}}</div>
+      </transition-group>
+      <div class="button-container">
+        <button class="button" @click="shuffle">shuffle</button>
+      </div>
+    </div>
+    <script>
+      // 注意列表的 key，key 如果用 index， vue 会设定所在元素不变，而去更改元素的内容
+      const data = {
+        items: Array.from({ length: 81 })
+          .fill("")
+          .map((ele, index) => ({
+            key: index + 1,
+            value: index + 1,
+          })),
+      };
+      const vm = new Vue({
+        el: "#app",
+        data,
+        watch: {},
+        computed: {},
+        methods: {
+          shuffle: function () {
+            const data = _.shuffle(this.items);
+            this.items = data;
+          },
+        },
+        mounted: function () {},
+      });
+    </script>
+  </body>
+</html>

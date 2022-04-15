@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./vue.js"></script>
+    <style>
+      .component-fade-enter-active,
+      .component-fade-leave-active {
+        transition: opacity 0.3s ease;
+      }
+      .component-fade-enter, .component-fade-leave-to
+/* .component-fade-leave-active for below version 2.1.8 */ {
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <transition name="component-fade" mode="out-in">
+        <component v-bind:is="view ? 'v-a' : 'v-b'"></component>
+      </transition>
+      <input type="checkbox" id="v-a" v-model="view" />
+      <label for="v-a">{{ view }}</label>
+    </div>
+    <script>
+      const data = {
+        view: false,
+      };
+      const vm = new Vue({
+        el: "#app",
+        components: {
+          "v-a": {
+            template: "<div>Component A</div>",
+          },
+          "v-b": {
+            template: "<div>Component B</div>",
+          },
+        },
+        data,
+        watch: {},
+        computed: {},
+        methods: {},
+        mounted: function () {},
+      });
+    </script>
+  </body>
+</html>

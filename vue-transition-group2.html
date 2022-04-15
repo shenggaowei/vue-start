@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./vue.js"></script>
+    <script src="./lodash.js"></script>
+    <style>
+      .flip-list-move {
+        transition: transform 1s;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <button v-on:click="shuffle">Shuffle</button>
+      <transition-group move-class="flip-list-move" tag="ul">
+        <li v-for="item in items" v-bind:key="item">{{ item }}</li>
+      </transition-group>
+    </div>
+    <script>
+      // 可以通过 move-class、v-move 和 name 前缀设置移动的动画
+      const data = {
+        items: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      };
+      const vm = new Vue({
+        el: "#app",
+        data,
+        watch: {},
+        computed: {},
+        methods: {
+          shuffle: function () {
+            this.items = _.shuffle(this.items);
+          },
+        },
+        mounted: function () {},
+      });
+    </script>
+  </body>
+</html>

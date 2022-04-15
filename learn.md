@@ -20,4 +20,5 @@
 
 ## 费解
 
-- 作用于插槽
+- 作用域插槽
+- transition-group 中的 v-move 指令的用法
