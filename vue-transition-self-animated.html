@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./vue.js"></script>
+    <style></style>
+  </head>
+  <link
+    href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1"
+    rel="stylesheet"
+    type="text/css"
+  />
+  <body>
+    <div id="app">
+      <button @click="show = !show">点击</button>
+      <transition
+        name="custom-classes-transition"
+        enter-active-class="animated tada"
+        leave-active-class="animated bounceOutRight"
+      >
+        <p v-if="show">Hello</p>
+      </transition>
+    </div>
+    <script>
+      const data = { show: true };
+      const vm = new Vue({
+        el: "#app",
+        data,
+        watch: {},
+        computed: {},
+        methods: {},
+        mounted: function () {},
+      });
+    </script>
+  </body>
+</html>

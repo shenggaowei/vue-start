@@ -1,0 +1,83 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./vue.js"></script>
+    <style>
+      /*  dom 插入时的过渡定义 */
+      .slide-fade-enter-active {
+        transition: all 0.8s ease;
+      }
+      /* dom 移除时的过度定义 */
+      .slide-fade-leave-active {
+        transition: all 0.8s ease;
+      }
+      /* 进入过度时的状态 */
+      .slide-fade-enter {
+        transform: translateX(20px);
+        opacity: 0;
+      }
+      /* 离开过度时的状态 */
+      .slide-fade-leave-to {
+        transform: translateX(-50px);
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" style="margin-left: 50px">
+      <transition name="slide-fade">
+        <button
+          v-bind:key="docState"
+          @click="change"
+          style="position: absolute"
+        >
+          {{ buttonMessage }}
+        </button>
+      </transition>
+    </div>
+    <script>
+      const data = {
+        docState: "saved",
+      };
+      const vm = new Vue({
+        el: "#app",
+        data,
+        watch: {},
+        computed: {
+          buttonMessage: function () {
+            switch (this.docState) {
+              case "saved":
+                return "Edit";
+              case "edited":
+                return "Save";
+              case "editing":
+                return "Cancel";
+            }
+          },
+        },
+        methods: {
+          change: function () {
+            switch (this.docState) {
+              case "saved":
+                this.docState = "editing";
+                break;
+              case "edited":
+                this.docState = "saved";
+                break;
+              case "editing":
+                this.docState = "edited";
+                break;
+            }
+            this.$nextTick(function () {
+              console.log(this.docState);
+            });
+          },
+        },
+        mounted: function () {},
+      });
+    </script>
+  </body>
+</html>
